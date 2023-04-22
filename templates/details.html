@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monster Detail</title>
+    </head>
+    <body>
+    <h1>Monster Details</h1>
+    <div id="monster">
+      <h2></h2>
+      <h3></h3>
+      <p></p>
+    </div>
+    <script>
+    // get data from the local storage
+    let monster = JSON.parse(localStorage.getItem('monster'));
+    // get the monster div
+    let monsterDiv = document.getElementById('monster');
+    // get the h2, h3, and p elements
+    let name = monsterDiv.querySelector('h2');
+    let type = monsterDiv.querySelector('h3');
+    let description = monsterDiv.querySelector('p');
+    // set the text content of the h2, h3, and p elements
+    name.textContent = monster.name;
+    type.textContent = monster.type;
+    description.textContent = monster.description;
+
+    </script>
+    </body>
+</html>

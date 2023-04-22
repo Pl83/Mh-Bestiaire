@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -39,23 +38,39 @@
         });
     });
 
+    
+
     function displayMonsters(monsters) {
-        let monstersTable = document.getElementById('monsters');
-        monstersTable.innerHTML = '';
-        for (let i = 0; i < monsters.length; i++){
-            let row = document.createElement('tr');
-            let name = document.createElement('td');
-            let type = document.createElement('td');
-            let description = document.createElement('td');
-            name.innerHTML = monsters[i].name;
-            type.innerHTML = monsters[i].type;
-            description.innerHTML = monsters[i].description.slice(0, 150) + '...';
-            row.appendChild(name);
-            row.appendChild(type);
-            row.appendChild(description);
-            monstersTable.appendChild(row);
-        }
+    let monstersTable = document.getElementById('monsters');
+    monstersTable.innerHTML = '';
+    for (let i = 0; i < monsters.length; i++){
+        let row = document.createElement('tr');
+        let name = document.createElement('td');
+        let type = document.createElement('td');
+        let description = document.createElement('td');
+        name.innerHTML = monsters[i].name;
+        type.innerHTML = monsters[i].type;
+        description.innerHTML = monsters[i].description.slice(0, 150) + '...';
+        row.appendChild(name);
+        row.appendChild(type);
+        row.appendChild(description);
+        row.addEventListener('click', function() {
+            let monsterName = name.innerHTML;
+            fetch('/api/monsters/' + monsterName)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (localStorage.getItem('monster')) {
+                    localStorage.removeItem('monster');
+                }
+                localStorage.setItem('monster', JSON.stringify(data));
+                window.location.href = '/details.html';
+            });
+        });
+        monstersTable.appendChild(row);
     }
+}
+
 
     function sortByName(monsters, sortDirection) {
         monsters.sort(function(a, b) {
@@ -91,4 +106,3 @@
     </script>
     </body>
 </html>
-
