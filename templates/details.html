@@ -14,6 +14,7 @@
         <div>
           <h2 id="name"></h2>
           <h3 id="type"></h3>
+          <h3 id="danger"></h3>
         </div>
       </div>
       <p id="description"></p>
@@ -22,7 +23,7 @@
     function back() {
       window.location.href = '/';
     }
-    
+
     let monster = JSON.parse(localStorage.getItem('monster'));
 
     let monsterDiv = document.getElementById('monster');
@@ -30,11 +31,13 @@
     let pp = monsterDiv.querySelector('#pp');
     let names = monsterDiv.querySelector('#name');
     let type = monsterDiv.querySelector('#type');
+    let danger = monsterDiv.querySelector('#danger');
     let description = monsterDiv.querySelector('#description');
 
     pp.src = `https://raw.githubusercontent.com/Pl83/Mh-Monster-data/main/img/${monster.name}.png`;
     names.textContent = monster.name;
     type.textContent = monster.type;
+    danger.textContent = monster.danger;
     description.textContent = monster.description;
 
     </script>
