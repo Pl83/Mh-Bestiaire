@@ -6,6 +6,7 @@ import jinja2 as jinja2
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
+# template road
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -15,6 +16,8 @@ def details():
     return render_template('details.html')
 
 
+
+# data road
 @app.route('/api/monsters')
 def get_monsters():
     url = 'https://raw.githubusercontent.com/Pl83/Mh-Monster-data/main/data.json'

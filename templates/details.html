@@ -7,23 +7,33 @@
         <title>Monster Detail</title>
     </head>
     <body>
-    <h1>Monster Details</h1>
+    <h1 onclick="back()">Monster Details</h1>
     <div id="monster">
-      <h2></h2>
-      <h3></h3>
-      <p></p>
+      <div>
+        <img id="pp" src="" alt="">
+        <div>
+          <h2 id="name"></h2>
+          <h3 id="type"></h3>
+        </div>
+      </div>
+      <p id="description"></p>
     </div>
     <script>
-    // get data from the local storage
+    function back() {
+      window.location.href = '/';
+    }
+    
     let monster = JSON.parse(localStorage.getItem('monster'));
-    // get the monster div
+
     let monsterDiv = document.getElementById('monster');
-    // get the h2, h3, and p elements
-    let name = monsterDiv.querySelector('h2');
-    let type = monsterDiv.querySelector('h3');
-    let description = monsterDiv.querySelector('p');
-    // set the text content of the h2, h3, and p elements
-    name.textContent = monster.name;
+
+    let pp = monsterDiv.querySelector('#pp');
+    let names = monsterDiv.querySelector('#name');
+    let type = monsterDiv.querySelector('#type');
+    let description = monsterDiv.querySelector('#description');
+
+    pp.src = `https://raw.githubusercontent.com/Pl83/Mh-Monster-data/main/img/${monster.name}.png`;
+    names.textContent = monster.name;
     type.textContent = monster.type;
     description.textContent = monster.description;
 
