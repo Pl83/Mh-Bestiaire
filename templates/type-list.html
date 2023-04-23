@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Weapons</h1>
+  <table>
+    <thead>
+      <tr>
+        <th id="name"></th>
+        <th id="rarity"></th>
+      </tr>
+    </thead>
+    <tbody id="weapons">
+    </tbody>
+  </table>
+  <script>
+    fetch('/api/weapons')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        let filter = localStorage.getItem('lastClickedWeaponType');
+        console.log(filter);
+        const weaponsTable = document.getElementById('weapons');
+        for (let weapon of data.Weapons) {
+          if (weapon.type === filter) {
+            const row = document.createElement('tr');
+            const nameCell = document.createElement('td');
+            const rarityCell = document.createElement('td');
+            nameCell.textContent = weapon.name;
+            rarityCell.textContent = weapon.rarity;
+            row.appendChild(nameCell);
+            row.appendChild(rarityCell);
+            weaponsTable.appendChild(row);
+          }
+        }
+      });
+  </script>
+</body>
+</html>

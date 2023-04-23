@@ -7,6 +7,51 @@
   <title>Weapon</title>
 </head>
 <body>
-  
+  <h1>Weapons type</h1>
+  <table>
+    <thead>
+      <tr>
+        <th id="type-header">Type</th>
+      </tr>
+    </thead>
+    <tbody id="weapons">
+    </tbody>
+  </table>
+  <script>
+    const weaponTypes = new Set(); // créer un ensemble pour stocker les types uniques
+
+    // Fonction pour afficher les types d'armes
+    function displayWeaponTypes(data) {
+      const weaponsTable = document.getElementById('weapons');
+      for (let weapon of data.Weapons) {
+        weaponTypes.add(weapon.type); // ajouter le type de l'arme à l'ensemble
+      }
+      for (let type of weaponTypes) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.textContent = type;
+        row.appendChild(cell);
+        weaponsTable.appendChild(row);
+      }
+    }
+
+    // Fonction pour stocker le type de l'arme cliquée dans le stockage local
+    function storeWeaponType(event) {
+      const clickedType = event.target.textContent;
+      localStorage.setItem('lastClickedWeaponType', clickedType);
+    }
+
+    // Récupérer les données JSON et afficher les types d'armes
+    fetch('/api/weapons')
+      .then(response => response.json())
+      .then(data => {
+        displayWeaponTypes(data);
+        const weaponTypeCells = document.querySelectorAll('#weapons td');
+        weaponTypeCells.forEach(cell => {
+          cell.addEventListener('click', storeWeaponType);
+          window.location.href = '/type-list.html';
+        });
+      });
+  </script>
 </body>
 </html>

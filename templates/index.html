@@ -1,108 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Monster Hunter World Bestiary</title>
-    </head>
-    <body>
-    <h1>Monster Hunter World Bestiary</h1>
-    <table>
-        <thead>
-            <tr>
-                <th id="name-header">Name</th>
-                <th id="type-header">Type</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody id="monsters">
-        </tbody>
-    </table>
-    <script>
-    fetch('/api/monsters')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        displayMonsters(data.Monsters);
-        let nameHeader = document.getElementById('name-header');
-        let typeHeader = document.getElementById('type-header');
-        let sortDirection = 1;
-        nameHeader.addEventListener('click', function() {
-            sortDirection *= -1;
-            sortByName(data.Monsters, sortDirection);
-        });
-        typeHeader.addEventListener('click', function() {
-            sortDirection *= -1;
-            sortByType(data.Monsters, sortDirection);
-        });
-    });
-
-    
-
-    function displayMonsters(monsters) {
-    let monstersTable = document.getElementById('monsters');
-    monstersTable.innerHTML = '';
-    for (let i = 0; i < monsters.length; i++){
-        let row = document.createElement('tr');
-        let name = document.createElement('td');
-        let type = document.createElement('td');
-        let description = document.createElement('td');
-        name.innerHTML = monsters[i].name;
-        type.innerHTML = monsters[i].type;
-        description.innerHTML = monsters[i].description.slice(0, 150) + '...';
-        row.appendChild(name);
-        row.appendChild(type);
-        row.appendChild(description);
-        row.addEventListener('click', function() {
-            let monsterName = name.innerHTML;
-            fetch('/api/monsters/' + monsterName)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if (localStorage.getItem('monster')) {
-                    localStorage.removeItem('monster');
-                }
-                localStorage.setItem('monster', JSON.stringify(data));
-                window.location.href = '/details.html';
-            });
-        });
-        monstersTable.appendChild(row);
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1 onclick="weapons()">Weapons</h1>
+  <h1 onclick="monsters()">Monsters</h1>
+  <script>
+    function weapons() {
+      window.location.href = '/weapons.html';
     }
-}
-
-
-    function sortByName(monsters, sortDirection) {
-        monsters.sort(function(a, b) {
-            let nameA = a.name.toUpperCase(); // ignore upper and lowercase
-            let nameB = b.name.toUpperCase(); // ignore upper and lowercase
-            if (nameA < nameB) {
-                return -1 * sortDirection;
-            }
-            if (nameA > nameB) {
-                return 1 * sortDirection;
-            }
-            // names must be equal
-            return 0;
-        });
-        displayMonsters(monsters);
+    function monsters() {
+      window.location.href = '/monsters.html';
     }
-
-    function sortByType(monsters, sortDirection) {
-        monsters.sort(function(a, b) {
-            let typeA = a.type.toUpperCase(); // ignore upper and lowercase
-            let typeB = b.type.toUpperCase(); // ignore upper and lowercase
-            if (typeA < typeB) {
-                return -1 * sortDirection;
-            }
-            if (typeA > typeB) {
-                return 1 * sortDirection;
-            }
-            // types must be equal
-            return 0;
-        });
-        displayMonsters(monsters);
-    }
-    </script>
-    </body>
+  </script>
+</body>
 </html>
